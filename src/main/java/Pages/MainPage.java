@@ -1,10 +1,5 @@
 package Pages;
 
-
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.commands.FindAll;
-import com.sun.javaws.Main;
-
 import static com.codeborne.selenide.Selenide.*;
 
 /**
@@ -12,9 +7,9 @@ import static com.codeborne.selenide.Selenide.*;
  */
 public class MainPage {
 
-    public PaymentPage toPaymentPage() {
-        $$("a[href='/payments/']").get(1).click(); // три элемента только второй видимый
+    public PaymentsPage toPaymentPage() {
+        $("span>a[href='/payments/']").click();
         //$("li[data-menu-item='2']").click();
-        return page(PaymentPage.class);
+        return page(PaymentsPage.class);
     }
 }

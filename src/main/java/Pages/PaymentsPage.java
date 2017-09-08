@@ -8,7 +8,7 @@ import static com.codeborne.selenide.Selenide.page;
 /**
  * Created by Александр on 07.09.2017.
  */
-public class PaymentPage {
+public class PaymentsPage extends MainPage {
 
 
     public ProviderPage toSection(String section) {
