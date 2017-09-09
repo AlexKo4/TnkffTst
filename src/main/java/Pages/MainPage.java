@@ -1,8 +1,6 @@
 package Pages;
 
 import com.codeborne.selenide.WebDriverRunner;
-import org.openqa.selenium.remote.DriverCommand;
-
 import static com.codeborne.selenide.Selenide.*;
 
 /**

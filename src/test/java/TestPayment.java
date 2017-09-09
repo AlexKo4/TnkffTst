@@ -5,22 +5,15 @@
 import Pages.MainPage;
 import Pages.PaymentsPage;
 import Pages.PaymentProviderPage;
-import Pages.ProviderPage;
-import com.codeborne.selenide.CollectionCondition;
+import Pages.ProvidersPage;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;
-import com.codeborne.selenide.conditions.Text;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.WebElement;
-
 import java.util.HashMap;
-
-import static com.codeborne.selenide.CollectionCondition.texts;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.open;
-import static com.codeborne.selenide.Selenide.sleep;
 
 
 public class TestPayment {
@@ -28,6 +21,8 @@ public class TestPayment {
 
     @Before
     public void beforeTest() {
+        System.setProperty("webdriver.chrome.driver",
+                System.getProperty("user.dir") + "\\target\\classes\\chromedriver.exe");
         Configuration.browser = "chrome";
     }
 
@@ -61,16 +56,16 @@ public class TestPayment {
         PaymentsPage paymentsPage = mainPage.toPaymentPage();
 
         //3
-        ProviderPage providerPage = paymentsPage.toSection("Коммунальные платежи");
+        ProvidersPage providersPage = paymentsPage.toProvidersPage("Коммунальные платежи");
 
         //4 иногда не находит Москву в виду того что не открыл список с регионами
-        providerPage.selectRegion("Москва");
+        providersPage.selectRegion("Москва");
 
-        //5 иногда записывает "Мобильная связь со страницы paymentsPage"
-        String firstProviderText = providerPage.getProviderList().first().getText();
+        //5 иногда записывает "Мобильная связь" со страницы paymentsPage
+        String firstProviderText = providersPage.getProviderList().first().getText();
 
         //6
-        PaymentProviderPage paymentProviderPage = providerPage.toPaymentProviderPage("ЖКУ-Москва").toPayForm();
+        PaymentProviderPage paymentProviderPage = providersPage.toPaymentProviderPage("ЖКУ-Москва").toPayForm();
         String urlZKUmoskva = paymentProviderPage.getURL();
 
         //7
@@ -93,13 +88,13 @@ public class TestPayment {
 
         //12
         paymentsPage = paymentProviderPage.toPaymentPage();
-        providerPage = paymentsPage.toSection("Коммунальные платежи");
+        providersPage = paymentsPage.toProvidersPage("Коммунальные платежи");
 
         //13
-        providerPage.selectRegion("Санкт-Петербург");
+        providersPage.selectRegion("Санкт-Петербург");
 
         //14
-        for (SelenideElement provider: providerPage.getProviderList()) {
+        for (SelenideElement provider: providersPage.getProviderList()) {
             Assert.assertFalse(provider.getText().equals(firstProviderText));
         }
 

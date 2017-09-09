@@ -2,8 +2,6 @@ package Pages;
 
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
-import org.openqa.selenium.WebElement;
-
 import static com.codeborne.selenide.Selenide.$$x;
 import static com.codeborne.selenide.Selenide.$x;
 import static com.codeborne.selenide.Selenide.page;
@@ -14,9 +12,9 @@ import static com.codeborne.selenide.Selenide.page;
 public class PaymentsPage extends MainPage {
 
 
-    public ProviderPage toSection(String section) {
-        $x("//span[text()='" + section + "']").click();
-        return page(ProviderPage.class);
+    public ProvidersPage toProvidersPage(String providerType) {
+        $x("//span[text()='" + providerType + "']").click();
+        return page(ProvidersPage.class);
     }
 
     public PaymentProviderPage seach(String text) {

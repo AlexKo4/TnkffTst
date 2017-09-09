@@ -2,15 +2,13 @@ package Pages;
 
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
-
 import java.util.ArrayList;
-
 import static com.codeborne.selenide.Selenide.*;
 
 /**
  * Created by Александр on 07.09.2017.
  */
-public class ProviderPage extends MainPage {
+public class ProvidersPage extends MainPage {
 
     private ArrayList<SelenideElement> providers = new ArrayList<>();
 
