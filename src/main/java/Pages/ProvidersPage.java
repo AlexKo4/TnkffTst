@@ -12,7 +12,7 @@ public class ProvidersPage extends MainPage {
 
     private ArrayList<SelenideElement> providers = new ArrayList<>();
 
-    //требуется рефакторинг
+    //Проверяет фактический регион на соответствтие с region, и если не соответствует меняет его на region
     public void selectRegion(String region) {
         String pattern = region.substring(0, region.length()-1);
         SelenideElement regionElement = $("span[class='ui-link payment-page__title_inner']");
@@ -34,7 +34,6 @@ public class ProvidersPage extends MainPage {
         System.out.println("click on toRegion");
     }
 
-
     public ElementsCollection getProviderList() {
         return $$("span[class*='ui-menu__link_icons_active'] span");
     }
@@ -45,4 +44,3 @@ public class ProvidersPage extends MainPage {
 
     }
 }
-

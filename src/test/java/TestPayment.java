@@ -18,14 +18,12 @@ import static com.codeborne.selenide.Selenide.open;
 
 public class TestPayment {
 
-
     @Before
     public void beforeTest() {
         System.setProperty("webdriver.chrome.driver",
                 System.getProperty("user.dir") + "\\target\\classes\\chromedriver.exe");
         Configuration.browser = "chrome";
     }
-
 
     @Test
     public void testPaymenZKU() throws InterruptedException {
@@ -97,6 +95,5 @@ public class TestPayment {
         for (SelenideElement provider: providersPage.getProviderList()) {
             Assert.assertFalse(provider.getText().equals(firstProviderText));
         }
-
     }
 }

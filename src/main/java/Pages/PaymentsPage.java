@@ -17,16 +17,13 @@ public class PaymentsPage extends MainPage {
         return page(ProvidersPage.class);
     }
 
-    public PaymentProviderPage seach(String text) {
-        $x("//span[text()='Что оплатить или куда перевести?']/../input").setValue(text);
-        return page(PaymentProviderPage.class);
-    }
-
+    //выбор провайдера из автокомплита (костыль для возврщения PaymentProviderPage)
     public PaymentProviderPage seach(SelenideElement seachResult) {
         seachResult.click();
         return page(PaymentProviderPage.class);
     }
 
+    //Возвращает коллекцию вариантов автокомплита в зависимости от text
     public ElementsCollection fastSeachResult(String text) {
         $x("//span[text()='Что оплатить или куда перевести?']/../input").setValue(text);
         return $$x("//div[contains(@class, 'ui-logo_size_42')]/ancestor::div[2]/div[1]/div[1]");
