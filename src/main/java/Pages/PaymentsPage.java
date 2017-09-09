@@ -1,7 +1,10 @@
 package Pages;
 
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import org.openqa.selenium.WebElement;
 
+import static com.codeborne.selenide.Selenide.$$x;
 import static com.codeborne.selenide.Selenide.$x;
 import static com.codeborne.selenide.Selenide.page;
 
@@ -16,4 +19,18 @@ public class PaymentsPage extends MainPage {
         return page(ProviderPage.class);
     }
 
+    public PaymentProviderPage seach(String text) {
+        $x("//span[text()='Что оплатить или куда перевести?']/../input").setValue(text);
+        return page(PaymentProviderPage.class);
+    }
+
+    public PaymentProviderPage seach(SelenideElement seachResult) {
+        seachResult.click();
+        return page(PaymentProviderPage.class);
+    }
+
+    public ElementsCollection fastSeachResult(String text) {
+        $x("//span[text()='Что оплатить или куда перевести?']/../input").setValue(text);
+        return $$x("//div[contains(@class, 'ui-logo_size_42')]/ancestor::div[2]/div[1]/div[1]");
+    }
 }

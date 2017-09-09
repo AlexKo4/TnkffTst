@@ -1,5 +1,8 @@
 package Pages;
 
+import com.codeborne.selenide.WebDriverRunner;
+import org.openqa.selenium.remote.DriverCommand;
+
 import static com.codeborne.selenide.Selenide.*;
 
 /**
@@ -11,5 +14,9 @@ public class MainPage {
         $("span>a[href='/payments/']").click();
         //$("li[data-menu-item='2']").click();
         return page(PaymentsPage.class);
+    }
+
+    public String getURL() {
+        return WebDriverRunner.url();
     }
 }

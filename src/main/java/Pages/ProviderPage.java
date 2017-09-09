@@ -16,12 +16,13 @@ public class ProviderPage extends MainPage {
 
     //требуется рефакторинг
     public void selectRegion(String region) {
+        String pattern = region.substring(0, region.length()-1);
         SelenideElement regionElement = $("span[class='ui-link payment-page__title_inner']");
-        if (!region.equals(regionElement.getText())) {
+        if (!(regionElement.getText().contains(pattern))) {
             switch (region) {
-                case "Москве" : changeRegion(regionElement, "г. Москва");
+                case "Москва" : changeRegion(regionElement, "г. Москва");
                     break;
-                case "Санкт-Петербурге" : changeRegion(regionElement, "г. Санкт-Петербург");
+                case "Санкт-Петербург" : changeRegion(regionElement, "г. Санкт-Петербург");
                     break;
                 default: changeRegion(regionElement, region);
             }
