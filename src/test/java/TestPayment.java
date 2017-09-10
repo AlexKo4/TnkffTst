@@ -12,21 +12,22 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import java.util.HashMap;
-import static com.codeborne.selenide.Condition.text;
+
 import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.sleep;
 
 
 public class TestPayment {
 
     @Before
     public void beforeTest() {
-        System.setProperty("webdriver.chrome.driver",
-                System.getProperty("user.dir") + "\\target\\classes\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", System.getProperty("user.home")+"\\webdrivers\\chromedriver.exe");
         Configuration.browser = "chrome";
     }
 
     @Test
     public void testPaymenZKU() throws InterruptedException {
+        //initialize test-data for testing validation of fields
         final HashMap<String, String> validatorCodePayer = new HashMap<>();
         validatorCodePayer.put("", "Поле обязательное");
         validatorCodePayer.put("123456789", "Поле неправильно заполнено");
@@ -56,10 +57,10 @@ public class TestPayment {
         //3
         ProvidersPage providersPage = paymentsPage.toProvidersPage("Коммунальные платежи");
 
-        //4 иногда не находит Москву в виду того что не открыл список с регионами
+        //4
         providersPage.selectRegion("Москва");
 
-        //5 иногда записывает "Мобильная связь" со страницы paymentsPage
+        //5
         String firstProviderText = providersPage.getProviderList().first().getText();
 
         //6
@@ -74,15 +75,9 @@ public class TestPayment {
         //8
         paymentsPage = paymentProviderPage.toPaymentPage();
 
-        //9
-        SelenideElement firstSeachResult = paymentsPage.fastSeachResult(firstProviderText).first();
-
-        //10
-        firstSeachResult.shouldHave(text(firstProviderText));
-
-        //11
-        paymentProviderPage = paymentsPage.seach(firstSeachResult);
-        Assert.assertTrue(urlZKUmoskva.equals(paymentProviderPage.getURL()));
+        //9-11
+        paymentProviderPage = paymentsPage.firstSeachResult(firstProviderText);
+        Assert.assertEquals(urlZKUmoskva, paymentProviderPage.getURL());
 
         //12
         paymentsPage = paymentProviderPage.toPaymentPage();
@@ -93,7 +88,8 @@ public class TestPayment {
 
         //14
         for (SelenideElement provider: providersPage.getProviderList()) {
-            Assert.assertFalse(provider.getText().equals(firstProviderText));
+            Assert.assertNotEquals(provider.getText(), firstProviderText);
         }
+        sleep(5000);
     }
 }

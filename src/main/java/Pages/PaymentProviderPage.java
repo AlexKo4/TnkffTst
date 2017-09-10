@@ -17,13 +17,13 @@ public class PaymentProviderPage extends MainPage {
         return page(PaymentProviderPage.class);
     }
 
-    //метод обертка для проверки полей на невалидные значения
+    //wrapper for checking fields for not valid values
     public void validateField(String fieldName, HashMap<String, String> validator) {
         if (fieldName.toLowerCase().contains("сумма")) validateAmountField(fieldName, validator);
         else validateUniqField(fieldName, validator);
     }
 
-    //основной методы проверки ввода невалидных значений в поле
+    //main method for checking fields for not valid values
     private void validateUniqField(String fieldName, HashMap<String, String> validator) {
         SelenideElement field = $x("//span[text()='" + fieldName + "']/preceding-sibling::input");
         validator.forEach((key, value) -> {
@@ -33,7 +33,7 @@ public class PaymentProviderPage extends MainPage {
         });
     }
 
-    //Метод аналогичный предыдущему. Костыль из-за отличающегося элементы "поле сумма"
+    //method like upper. Different in locator field "amount"
     private void validateAmountField(String fieldName, HashMap<String, String> validator) {
         SelenideElement field = $x("//b[contains(text(), '" + fieldName + "')]/preceding-sibling::input");
         validator.forEach((key, value) -> {

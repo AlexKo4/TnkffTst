@@ -1,10 +1,13 @@
 package Pages;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import static com.codeborne.selenide.Selenide.$$x;
 import static com.codeborne.selenide.Selenide.$x;
 import static com.codeborne.selenide.Selenide.page;
+import static com.codeborne.selenide.Condition.text;
 
 /**
  * Created by Александр on 07.09.2017.
@@ -17,15 +20,12 @@ public class PaymentsPage extends MainPage {
         return page(ProvidersPage.class);
     }
 
-    //выбор провайдера из автокомплита (костыль для возврщения PaymentProviderPage)
-    public PaymentProviderPage seach(SelenideElement seachResult) {
-        seachResult.click();
-        return page(PaymentProviderPage.class);
-    }
 
-    //Возвращает коллекцию вариантов автокомплита в зависимости от text
-    public ElementsCollection fastSeachResult(String text) {
-        $x("//span[text()='Что оплатить или куда перевести?']/../input").setValue(text);
-        return $$x("//div[contains(@class, 'ui-logo_size_42')]/ancestor::div[2]/div[1]/div[1]");
+    //searching by argument and checking first result with redirect to result page
+    public PaymentProviderPage firstSeachResult(String textSeach) {
+        $x("//span[text()='Что оплатить или куда перевести?']/../input").setValue(textSeach);
+        SelenideElement result = $$x("//div[contains(@class, 'ui-logo_size_42')]/ancestor::div[2]/div[1]/div[1]").first();
+        result.shouldNotHave(text(textSeach)).click();
+        return page(PaymentProviderPage.class);
     }
 }

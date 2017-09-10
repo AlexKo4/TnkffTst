@@ -12,7 +12,7 @@ public class ProvidersPage extends MainPage {
 
     private ArrayList<SelenideElement> providers = new ArrayList<>();
 
-    //Проверяет фактический регион на соответствтие с region, и если не соответствует меняет его на region
+    //Check the actual region for equals with argument, and it changes it to the region if not matches
     public void selectRegion(String region) {
         String pattern = region.substring(0, region.length()-1);
         SelenideElement regionElement = $("span[class='ui-link payment-page__title_inner']");
@@ -29,9 +29,7 @@ public class ProvidersPage extends MainPage {
 
     private void changeRegion (SelenideElement regionElement, String toRegion) {
         regionElement.click();
-        System.out.println("ckick on region Element");
         $x("//span[text()='" + toRegion + "']").click();
-        System.out.println("click on toRegion");
     }
 
     public ElementsCollection getProviderList() {
